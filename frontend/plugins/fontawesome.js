@@ -9,6 +9,7 @@ import {
   faArrowDown,
   faShoppingCart,
   faPlus,
+  faEye
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -19,7 +20,8 @@ library.add(
   faTimes,
   faArrowDown,
   faShoppingCart,
-  faPlus
+  faPlus,
+  faEye
 );
 
 export default defineNuxtPlugin((nuxtApp) => {

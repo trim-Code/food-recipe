@@ -1,8 +1,8 @@
 <template>
   <div
-    class="container flex flex-col items-center justify-center mx-auto px-4 py-12 w-screen mt-20 gap-8"
+    class="container flex flex-col items-center justify-center mx-auto px-4 py-12 w-screen  gap-8"
   >
-    <h1 class="flex gap-4 items-center justify-center text-4xl text-[#bdb6a7] font-bold mb-4">
+    <h1 class="flex gap-4 items-center justify-center text-4xl text-[#bdb6a7] font-bold mb-6">
       <img src="assets/images/left-shap.png" alt=""  class="w-28"/> How It Works
       <img src="assets/images/right-shap.png" alt="" class="w-28"/>
     </h1>
