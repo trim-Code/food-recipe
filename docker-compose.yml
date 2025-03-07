@@ -3,27 +3,27 @@ version: "3.8"
 services:
   postgres:
     image: postgres:15
-    container_name: postgres_container
     restart: always
+    container_name: my_postgres
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: adminpassword
-      POSTGRES_DB: foodrecipe
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: john432
+      POSTGRES_DB: food-recipe-db
     ports:
       - "5433:5432"
     volumes:
-      - pg_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
 
   hasura:
-    image: hasura/graphql-engine:v2.36.0
-    container_name: hasura_container
+    image: hasura/graphql-engine:latest
     restart: always
+    container_name: my_hasura
     ports:
-      - "8080:8080"
+      - "8080:8080"  
     depends_on:
       - postgres
+      - food-recipe
     environment:
-      HASURA_GRAPHQL_DATABASE_URL: postgres://admin:adminpassword@postgres:5432/foodrecipe
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
       HASURA_GRAPHQL_DEV_MODE: "true"
       HASURA_GRAPHQL_ADMIN_SECRET: "myadminsecretkey"
