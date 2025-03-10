@@ -6,6 +6,9 @@
   .btn {
     @apply cursor-pointer inline-flex items-center gap-2 justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-black bg-[#f2d6d0c6] transition-all delay-75 ease-in-out 
   }
+  .btn-catagories {
+    @apply cursor-pointer inline-flex items-center gap-2 justify-center px-8 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-black  bg-[#e67e22]      transition-all delay-75 ease-in-out 
+  }
 }
 @layer base {
   * {
@@ -15,3 +18,11 @@
     @apply text-[#e5e5e5];
   }
 }
+
+@layer utilities{
+  .my-lg{
+margin-top:48px
+  }
+}
+
+

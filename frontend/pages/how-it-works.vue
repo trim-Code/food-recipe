@@ -1,3 +1,5 @@
+
+
 <template>
   <div
     class="container flex flex-col items-center justify-center mx-auto px-4 py-12 w-screen  gap-8"
@@ -74,3 +76,10 @@
     </div>
   </div>
 </template>
+
+<script setup >
+import Footer from '~/components/Footer.vue';
+useHead({
+  title:"Kimem-Recipe | how it works"
+})
+</script>

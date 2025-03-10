@@ -40,15 +40,16 @@
             >Password</label
           >
           <input
-            type="password"
+            :type="showPassword ? 'text' : 'password'"
             id="password"
             class="w-full px-3 py-2 border rounded-lg focus:outline-none  relative "
             placeholder="Enter your password"
           />
-<FontawesomeIcon
-            icon="eye"
-            class="absolute right-3 top-2 text-white cursor-pointer"
-          />
+<FontAwesomeIcon
+              :icon="showPassword ? 'eye-slash' : 'eye'"
+              class="absolute right-3 top-2 text-gray-700 cursor-pointer"
+              @click="togglePasswordVisibility"
+            />
         </div>
         <div class="mb-4 flex items-center justify-between">
           <label class="inline-flex items-center">
@@ -78,6 +79,25 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from 'vue';
+definePageMeta({
+  layout: "auth",
+});
+
+useHead({
+  title: 'Kimem | Login',
+  meta: [
+    { name: 'description', content: 'Login to your account' },
+    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+  ],
+})
+const showPassword = ref(false);
+const showConfirmPassword=ref(false)
+
+const togglePasswordVisibility = () => {
+  showPassword.value = !showPassword.value;
+};
+</script>
 
 <style scoped></style>

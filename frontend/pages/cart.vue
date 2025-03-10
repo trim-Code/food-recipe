@@ -11,15 +11,22 @@
             <p class="text-sm text-gray-600">${{ recipe.price }}</p>
           </div>
         </div>
-        <div class="flex items-center space-x-2">
+        <!-- <div class="flex items-center space-x-2">
           <button @click="decreaseQuantity(index)" class="px-2 py-1 bg-gray-200 rounded">-</button>
           <span class="text-lg">{{ recipe.quantity }}</span>
           <button @click="increaseQuantity(index)" class="px-2 py-1 bg-gray-200 rounded">+</button>
-        </div>
+        </div> -->
+        <button class="">
+          <font-awesome-icon
+            icon="trash"
+            class="text-red-500 hover:text-red-700 cursor-pointer"
+            @click="removeRecipe(index)"
+          />
+        </button>
       </div>
       
       <div class="text-right text-xl font-bold mt-4">Total: ${{ totalPrice }}</div>
-      <button class="mt-4 w-full bg-orange-500 text-white py-3 rounded-lg">Checkout</button>
+      <button class="checkOut mt-4 w-full bg-orange-500 text-white py-3 rounded-lg ">Checkout</button>
     </div>
   </div>
   
@@ -29,7 +36,9 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-
+useHead({
+  title:'Kimem-Recipe | cart'
+})
 const recipes = ref([
   { name: "Spaghetti Bolognese", image: "assets/images/jj.jpg", price: 12.99, quantity: 1 },
   { name: "Grilled Salmon", image: "assets/images/jj.jpg", price: 15.99, quantity: 1 },
@@ -37,25 +46,33 @@ const recipes = ref([
 ]);
 
 const totalPrice = computed(() => {
-  return recipes.value.reduce((sum, recipe) => sum + recipe.price * recipe.quantity, 0).toFixed(2);
+  return recipes.value.reduce((sum, recipe) => sum + recipe.price , 0).toFixed(2);
 });
 
-const increaseQuantity = (index) => {
-  recipes.value[index].quantity++;
-};
+// const increaseQuantity = (index) => {
+//   recipes.value[index].quantity++;
+// };
 
-const decreaseQuantity = (index) => {
-  if (recipes.value[index].quantity > 1) {
-    recipes.value[index].quantity--;
-  }
+// const decreaseQuantity = (index) => {
+//   if (recipes.value[index].quantity > 1) {
+//     recipes.value[index].quantity--;
+//   }
+// };
+
+const removeRecipe = (index) => {
+  recipes.value.splice(index, 1);
+  totalPrice.value = computed(() => {
+    return recipes.value.reduce((sum, recipe) => sum + recipe.price, 0).toFixed(2);
+  });
 };
 </script>
 
 <style scoped>
-button {
+button.checkOut {
   transition: background 0.3s;
 }
-button:hover {
+button.checkOut:hover {
   background: #ff8c42;
 }
 </style>
+

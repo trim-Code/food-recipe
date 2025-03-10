@@ -1,6 +1,6 @@
 <template>
   <footer
-    class="relative bg-gradient-to-b from-[#0b304d] to-[#993b0cc5] text-white mt-20"
+    class="fixed bottom-0 left-0 w-full bg-gradient-to-b from-[#0b304d] to-[#993b0cc5] text-white"
   >
     <svg
       class="absolute top-0 w-full"
@@ -28,7 +28,7 @@
         <NuxtLink to="/my-recipes" class="text-white hover:text-orange-200"
           >Recipes</NuxtLink
         >
-        <NuxtLink to="/" class="text-white hover:text-orange-200"
+        <NuxtLink to="/contacts" class="text-white hover:text-orange-200"
           >Contact</NuxtLink
         >
       </div>

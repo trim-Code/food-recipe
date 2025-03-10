@@ -9,7 +9,15 @@ import {
   faArrowDown,
   faShoppingCart,
   faPlus,
-  faEye
+  faEye,
+  faEyeSlash,
+  faArrowLeft,
+  faFilter,
+  faChevronDown,
+  faLocationDot, 
+  faEnvelope, 
+  faPhone,
+  faTrash, 
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -21,7 +29,15 @@ library.add(
   faArrowDown,
   faShoppingCart,
   faPlus,
-  faEye
+  faEye,
+  faEyeSlash,
+  faArrowLeft,
+  faFilter,
+  faChevronDown,
+  faLocationDot, 
+  faEnvelope, 
+  faPhone ,
+  faTrash
 );
 
 export default defineNuxtPlugin((nuxtApp) => {

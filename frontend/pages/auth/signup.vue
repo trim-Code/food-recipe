@@ -46,29 +46,39 @@
         </div>
         <div class="mb-4">
           <label
-            class="block text-[#2a3a6ddd] text-sm font-bold mb-2"
-            for="password"
-            >Password</label
-          >
+              class="block text-[#2a3a6ddd] text-sm font-bold mb-2"
+              for="password"
+              > Password</label
+            >
           <input
-            type="password"
-            id="password"
-            class="w-full px-3 py-2 border rounded-lg focus:outline-none"
-            placeholder="Enter your password"
-          />
-        </div>
-        <div class="mb-4">
-          <label
-            class="block text-[#2a3a6ddd] text-sm font-bold mb-2"
-            for="confirm-password"
-            >Confirm Password</label
-          >
-          <input
-            type="password"
-            id="confirm-password"
-            class="w-full px-3 py-2 border rounded-lg focus:outline-none"
-            placeholder="Confirm your password"
-          />
+              :type="showPassword ? 'text' : 'password'"
+              id="password"
+              class="w-full px-3 py-2 border rounded-lg focus:outline-none"
+              placeholder="Enter your password"
+            />
+            <FontAwesomeIcon
+              :icon="showPassword ? 'eye-slash' : 'eye'"
+              class="absolute right-3 top-2  text-white cursor-pointer"
+              @click="togglePasswordVisibility"
+            />
+          </div>
+          <div class="mb-4 relative">
+            <label
+              class="block text-[#2a3a6ddd] text-sm font-bold mb-2"
+              for="confirm-password"
+              >Confirm Password</label
+            >
+            <input
+              :type="showConfirmPassword ? 'text' : 'password'"
+              id="confirm-password"
+              class="w-full px-3 py-2 border rounded-lg focus:outline-none"
+              placeholder="Confirm your password"
+            />
+            <FontAwesomeIcon
+              :icon="showConfirmPassword ? 'eye-slash' : 'eye'"
+              class="absolute right-3 top-2 text-white cursor-pointer"
+              @click="toggleConfirmPasswordVisibility"
+            />
         </div>
         <div class="text-center">
           <button
@@ -89,6 +99,32 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from 'vue';
+definePageMeta({
+  layout: "auth",
+});
+useHead({
+  title: 'Kimem | signup',
+  meta: [
+    {
+      name: 'description',
+      content: 'Sign up for the Recipe App to discover, create, and share your favorite recipes.',
+    },
+  ],
+})
+const showPassword=ref(false)
+const showConifrmPassword=ref(false)
+
+
+const togglePasswordVisibility = () => {
+  showPassword.value = !showPassword.value;
+};
+
+const toggleConfirmPasswordVisibility = () => {
+  showConfirmPassword.value = !showConfirmPassword.value;
+};
+
+</script>
 
 <style scoped></style>

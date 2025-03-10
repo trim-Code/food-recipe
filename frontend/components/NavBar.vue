@@ -1,6 +1,6 @@
 <template>
-  <nav class="bg-black w-full shadow-lg  z-50">
-    <div class="container mx-auto flex items-center justify-between py-4 px-0">
+<nav class="bg-black w-full shadow-lg  fixed top-0 z-50  border-b border-gray-700 border-spacing-0">
+    <div class="container mx-auto flex items-center justify-between py-4 px-0 ">
       <!-- Logo -->
       <NuxtLink to="/">
         <div class="w-10 font-bold text-yellow-500">
@@ -71,11 +71,13 @@
           </button>
         </NuxtLink>
 
-        <button class="">
-          <font-awesome-icon icon="bookmark" />
-        </button>
+        <NuxtLink to="/bookmark">                                                                                                                                                                   
+          <button class="hover:text-yellow-400">
+            <font-awesome-icon icon="bookmark" />
+          </button>
+        </NuxtLink>
         <NuxtLink to="/cart">
-          <button class="">
+          <button class="hover:text-yellow-400">
             <font-awesome-icon icon="shopping-cart" />
           </button>
         </NuxtLink>
@@ -91,13 +93,13 @@
             <span>John</span>
           </button>
           <div class="dropdown-menu" v-if="showProfile">
-            <NuxtLink to="/my-recipes" class="dropdown-item"
+            <NuxtLink to="/my-recipes" class="dropdown-item cursor-pointer"
               >My Recipes</NuxtLink
             >
-            <NuxtLink to="/profile/settings" class="dropdown-item"
+            <NuxtLink to="/profile/settings" class="dropdown-item cursor-pointer"
               >Settings</NuxtLink
             >
-            <NuxtLink to="/auth/login" class="dropdown-item">Logout</NuxtLink>
+            <NuxtLink to="/auth/login" class="dropdown-item cursor-pointer">Logout</NuxtLink>
           </div>
         </div>
       </div>
