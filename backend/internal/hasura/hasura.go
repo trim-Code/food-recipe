@@ -1,10 +1,10 @@
 package hasura
 
 import (
-    "bytes"
-    "encoding/json"
-    "net/http"
-    "log"
+	"bytes"
+	"encoding/json"
+	"log"
+	"net/http"
 )
 
 const hasuraEndpoint = "http://localhost:8080/v1/graphql"

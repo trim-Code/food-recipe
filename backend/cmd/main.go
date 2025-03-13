@@ -19,7 +19,7 @@ func main() {
     r.POST("/login", handlers.Login)
 
     // Protected routes (requires authentication)
-    r.POST("/create-recipe", middleware.AuthMiddleware(), handlers.CreateRecipe)
+    r.POST("/create-recipe", middleware.AuthMiddleware(), handlers.CreateNewRecipe)
 
     // Start the server
     r.Run(":7001")

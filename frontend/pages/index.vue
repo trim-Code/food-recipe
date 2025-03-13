@@ -1,8 +1,8 @@
 <template>
   <div class="w-screen min-h-screen flex flex-col">
-    <Navbar />
+    <!-- <Navbar /> -->
 
-    <NuxtPage />
+    <!-- <NuxtPage /> -->
 
     <!-- Hero Section -->
     <div class="relative h-screen w-screen flex-grow">
@@ -45,7 +45,7 @@
             <button
               @click="selectTab(tab.key)"
               class="btn-catagories px-8 uppercase bg-[#e67e22]"
-              :class="{ 'bg-[#e67e22] text-white ': tab.key === activeTab } "
+              :class="{ 'bg-[#e67e22] text-white ': tab.key === activeTab }"
             >
               {{ tab.label }}
             </button>
@@ -66,7 +66,12 @@
             <div class="absolute top-3 right-3 z-10">
               <font-awesome-icon
                 icon="bookmark"
-                class="text-gray-400 hover:text-[#24515b] cursor-pointer"
+                :class="
+                  bookmarkedRecipes.includes(recipe.id)
+                    ? 'text-[#e67e22]'
+                    : 'text-[#ffffff]'
+                "
+                class="hover:text-[#e67e22] active:text- cursor-pointer"
                 @click="toggleBookmark(recipe)"
               />
             </div>
@@ -77,12 +82,17 @@
               class="w-full h-48 object-cover"
             />
             <!-- Content -->
-            <div class="p-4">
-              <h2 class="text-lg font-bold mb-2">{{ recipe.title }}</h2>
-              <p class="text-sm text-gray-600">By {{ recipe.creator }}</p>
-              <p class="text-md font-semibold mt-2 text-[#24515b]">
-                {{ recipe.price }}
-              </p>
+            <div class="p-3 bg-[#f0ebea] flex items-center gap-48">
+              <div class="">
+                <h2 class="text-lg font-bold mb-2 text-black">
+                  {{ recipe.title }}
+                </h2>
+                <p class="text-sm text-gray-600">By {{ recipe.creator }}</p>
+                <p class="text-md font-semibold mt-2 text-[#24515b]">
+                  {{ recipe.price }}
+                </p>
+              </div>
+              <p class="text-black">rating</p>
             </div>
           </div>
         </div>
@@ -96,12 +106,15 @@
         </div>
       </div>
     </main>
+
+    <!-- Footer -->
+    <!-- <Footer  /> -->
   </div>
 </template>
 
 <script setup>
 import { ref, computed } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 
 // Tabs array
 const tabs = [
@@ -125,10 +138,94 @@ const recipes = {
     },
     {
       id: 2,
-      title: "Beef Steak",
+      title: "Spaghetti Carbonara",
       creator: "Chef John",
       price: "$18",
-      image: "ss.jpg",
+      image: "dd.jpeg",
+    },
+    {
+      id: 3,
+      title: "Spaghetti Carbonara",
+      creator: "Chef John",
+      price: "$18",
+      image: "dd.jpeg",
+    },
+    {
+      id: 1,
+      title: "Spaghetti Carbonara",
+      creator: "Chef Anna",
+      price: "$12",
+      image: "dd.jpeg",
+    },
+    {
+      id: 2,
+      title: "Spaghetti Carbonara",
+      creator: "Chef John",
+      price: "$18",
+      image: "dd.jpeg",
+    },
+    {
+      id: 3,
+      title: "Spaghetti Carbonara",
+      creator: "Chef John",
+      price: "$18",
+      image: "dd.jpeg",
+    },
+    {
+      id: 1,
+      title: "Spaghetti Carbonara",
+      creator: "Chef Anna",
+      price: "$12",
+      image: "dd.jpeg",
+    },
+    {
+      id: 2,
+      title: "Spaghetti Carbonara",
+      creator: "Chef John",
+      price: "$18",
+      image: "dd.jpeg",
+    },
+    {
+      id: 3,
+      title: "Spaghetti Carbonara",
+      creator: "Chef John",
+      price: "$18",
+      image: "dd.jpeg",
+    },
+    {
+      id: 1,
+      title: "Spaghetti Carbonara",
+      creator: "Chef Anna",
+      price: "$12",
+      image: "dd.jpeg",
+    },
+    {
+      id: 2,
+      title: "Spaghetti Carbonara",
+      creator: "Chef John",
+      price: "$18",
+      image: "dd.jpeg",
+    },
+    {
+      id: 3,
+      title: "Spaghetti Carbonara",
+      creator: "Chef John",
+      price: "$18",
+      image: "dd.jpeg",
+    },
+    {
+      id: 3,
+      title: "Spaghetti Carbonara",
+      creator: "Chef John",
+      price: "$18",
+      image: "dd.jpeg",
+    },
+    {
+      id: 3,
+      title: "Spaghetti Carbonara",
+      creator: "Chef John",
+      price: "$18",
+      image: "dd.jpeg",
     },
   ],
   cuisine: [
@@ -180,42 +277,52 @@ const recipes = {
 
 // Reactive active tab
 const activeTab = ref(tabs[0].key); // Default active tab
+// const isBookmarked = ref(false);
+const bookmarkedRecipes = ref([]);
 
+const loadBookmarks = () => {
+  if (typeof localStorage !== "undefined") {
+    const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+    bookmarkedRecipes.value = bookmarks;
+  }
+};
+loadBookmarks();
+const isBookmarked = (recipeId) => {
+  return bookmarkedRecipes.value.some((recipe) => recipe.id === recipeId);
+};
 
 const selectTab = (key) => {
   activeTab.value = key;
 };
 
-
 const filteredRecipes = computed(() => {
   return recipes[activeTab.value] || [];
 });
-
 
 const getImageUrl = (imageName) => {
   return new URL(`/assets/images/${imageName}`, import.meta.url).href;
 };
 
-
 const router = useRouter();
+const route = useRoute();
 
 
 const goToRecipePage = (id) => {
-  router.push({... recipes[activeTab.value] , params: { id } });
+  router.push({ ...recipes[activeTab.value], params: { id } });
 };
-
 
 const toggleBookmark = (recipe) => {
-  let bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
-  const index = bookmarks.findIndex((item) => item.id === recipe.id);
-  if (index === -1) {
-    bookmarks.push(recipe);
-  } else {
-    bookmarks.splice(index, 1);
+  if (typeof localStorage !== "undefined") {
+    let bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+    const index = bookmarks.findIndex((item) => item.id === recipe.id);
+    if (index === -1) {
+      bookmarks.push(recipe);
+    } else {
+      bookmarks.splice(index, 1);
+    }
+    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
   }
-  localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
 };
-
 
 useHead({
   title: "Kimem-Recipe",
@@ -230,7 +337,6 @@ useHead({
 </script>
 
 <style scoped>
-
 .btn-catagories {
   @apply py-2 rounded-full  shadow hover:bg-[#eea564] transition-all;
 }

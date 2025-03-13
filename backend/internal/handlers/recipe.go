@@ -1,48 +1,58 @@
-// package handlers
-
-// import (
-// 	"net/http"
-
-// 	"github.com/gin-gonic/gin"
-// )
-
-// // Recipe struct to hold recipe data
-// type Recipe struct {
-//     Name        string   `json:"name"`
-//     Ingredients []string `json:"ingredients"`
-//     Instructions string  `json:"instructions"`
-// }
-
-// filepath: /Users/mac/Desktop/food-recipe-app/backend/internal/handlers/handlers.go
 package handlers
 
 import (
-    "net/http"
-    "food-recipe-app/backend/internal/hasura"
-    "github.com/gin-gonic/gin"
+	"food-recipe-app/backend/internal/hasura"
+	"net/http"
+	"os"
+
+	"github.com/gin-gonic/gin"
 )
 
 func CreateRecipe(c *gin.Context) {
-    // Assuming the user is already authenticated, you can access their username from the context
     username, _ := c.Get("username")
 
+    var requestBody struct {
+        Title       string `json:"title"`
+        Description string `json:"description"`
+        Category    string `json:"category"`
+        PrepTime    int    `json:"prep_time"`
+        Ingredients []struct {
+            Name     string `json:"name"`
+            Quantity string `json:"quantity"`
+        } `json:"ingredients"`
+        Steps []struct {
+            StepNumber int    `json:"step_number"`
+            Instruction string `json:"instruction"`
+        } `json:"steps"`
+    }
+
+    if err := c.ShouldBindJSON(&requestBody); err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JSON format"})
+        return
+    }
+
     query := `
-    mutation ($title: String!, $description: String!) {
-        insert_recipes(objects: {title: $title, description: $description}) {
+    mutation ($title: String!, $description: String!, $category: String!, $prep_time: Int!, $ingredients: [ingredients_insert_input!]!, $steps: [steps_insert_input!]!) {
+        insert_recipes(objects: {title: $title, description: $description, category: $category, prep_time: $prep_time, ingredients: {data: $ingredients}, steps: {data: $steps}}) {
             returning {
                 id
             }
         }
     }`
     variables := map[string]interface{}{
-        "title":       c.PostForm("title"),
-        "description": c.PostForm("description"),
+        "title":       requestBody.Title,
+        "description": requestBody.Description,
+        "category":    requestBody.Category,
+        "prep_time":   requestBody.PrepTime,
+        "ingredients": requestBody.Ingredients,
+        "steps":       requestBody.Steps,
     }
 
     headers := map[string]string{
         "Content-Type": "application/json",
+        "X-Hasura-Admin-Secret": os.Getenv("HASURA_GRAPHQL_ADMIN_SECRET"),
     }
-    endpoint := "https://your-hasura-endpoint/v1/graphql"
+    endpoint := os.Getenv("HASURA_GRAPHQL_ENDPOINT")
     _, err := hasura.ExecuteGraphQLQuery(endpoint, headers, query, variables)
     if err != nil {
         c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -51,7 +61,6 @@ func CreateRecipe(c *gin.Context) {
 
     c.JSON(http.StatusCreated, gin.H{
         "message": "Recipe created successfully",
-        // "recipe":  newRecipe,
         "user":    username,
     })
 }

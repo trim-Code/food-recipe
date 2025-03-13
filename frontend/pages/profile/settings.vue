@@ -2,9 +2,12 @@
   <div class="min-h-screen bg-gray-100 p-6">
     <div class="max-w-5xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
       <!-- Header -->
-      <div class="bg-[#24515b] p-6">
-        <h2 class="text-2xl font-bold text-white">Account Settings</h2>
-        <p class="text-gray-200">Manage your personal information and preferences</p>
+      <div class="bg-[#ef6621ee] p-6 text-center ">
+
+
+          <h2 class="text-2xl font-bold text-white">Account Settings</h2>
+          <p class="text-gray-200">Manage your personal information and preferences</p>
+
       </div>
 
       <!-- Content -->

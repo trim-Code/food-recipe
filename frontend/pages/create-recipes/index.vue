@@ -176,6 +176,6 @@ const previewImage = (event) => {
 };
 
 const handleSubmit = (event) => {
-  event.preventDefault();
+  event.preventDefault(); 
 };
 </script>

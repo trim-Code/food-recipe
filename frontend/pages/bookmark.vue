@@ -21,29 +21,30 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      bookmarkedRecipes: [],
-    };
-  },
-  created() {
-    this.loadBookmarks();
-  },
-  methods: {
-    loadBookmarks() {
-      const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
-      this.bookmarkedRecipes = bookmarks;
-    },
-    removeBookmark(id) {
-      this.bookmarkedRecipes = this.bookmarkedRecipes.filter(
-        (recipe) => recipe.id !== id
-      );
-      localStorage.setItem("bookmarks", JSON.stringify(this.bookmarkedRecipes));
-    },
-  },
-};
+<script setup>
+import { ref, onMounted } from "vue";
+
+const bookmarkedRecipes = ref([]);
+
+onMounted(() => {
+  loadBookmarks();
+});
+
+function loadBookmarks() {
+  if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
+    const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+    bookmarkedRecipes.value = bookmarks;
+  }
+}
+
+function removeBookmark(id) {
+  bookmarkedRecipes.value = bookmarkedRecipes.value.filter(
+    (recipe) => recipe.id !== id
+  );
+  if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
+    localStorage.setItem("bookmarks", JSON.stringify(bookmarkedRecipes.value));
+  }
+}
 </script>
 
 <style scoped>

@@ -31,6 +31,9 @@
         <NuxtLink to="/contacts" class="text-white hover:text-orange-200"
           >Contact</NuxtLink
         >
+        <NuxtLink to="/about" class="text-white hover:text-orange-200"
+          >About</NuxtLink
+        >
       </div>
       <p class="mt-6 text-sm">&copy; 2025 Kimem. All rights reserved.</p>
     </div>

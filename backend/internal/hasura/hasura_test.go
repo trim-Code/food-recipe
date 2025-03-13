@@ -7,6 +7,7 @@ import (
     "reflect"
     "testing"
 )
+
 func TestExecuteGraphQLQuery(t *testing.T) {
     // Create a test HTTP server
     server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -16,8 +17,8 @@ func TestExecuteGraphQLQuery(t *testing.T) {
         }
 
         // Check for the required headers
-        if r.Header.Get("x-hasura-admin-secret") != "myadminsecretkey" {
-            t.Fatalf("Expected x-hasura-admin-secret header to be set")
+        if r.Header.Get("X-Hasura-Admin-Secret") != "myadminsecretkey" {
+            t.Fatalf("Expected X-Hasura-Admin-Secret header to be set")
         }
 
         // Decode the request body
@@ -47,7 +48,7 @@ func TestExecuteGraphQLQuery(t *testing.T) {
 
     // Set the required headers
     headers := map[string]string{
-        "x-hasura-admin-secret": "myadminsecretkey",
+        "X-Hasura-Admin-Secret": "myadminsecretkey",
     }
 
     // Execute the GraphQL query
